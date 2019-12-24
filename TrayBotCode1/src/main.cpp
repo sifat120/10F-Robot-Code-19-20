@@ -31,8 +31,7 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
-//Motor degrees (used for autonomous)
-float mDegrees;
+float mDegrees; //Motor degrees (used for autonomous)
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -72,6 +71,8 @@ void tankDrive(double sensitivity) {
 
   if(abs(ly) < threshold) ly = 0;
   if(abs(ry) < threshold) ry = 0;
+
+  //sense x and sense y are for sensitivities
   int sensely = pow(ly/100, sensitivity) * 100;
   int sensery = pow(ry/100, sensitivity) * 100;
 
@@ -81,7 +82,7 @@ void tankDrive(double sensitivity) {
   rBack.spin(directionType::fwd, sensery, velocityUnits::pct);
 }
 
-//Lift function
+//Lift function (dw about this, because it is for arcade drive)
 void liftN() {
   int threshold = 10;
   int ry = Controller1.Axis2.position(percentUnits::pct); //Right Joystick Y-Axis
@@ -94,11 +95,11 @@ void liftN() {
 //Lift function when tank drive function is enabled
 void liftwT(int liftSpeed) {
   //Going up
-  if(Controller1.ButtonL1.pressing()) {
+  if(Controller1.ButtonL1.pressing()) { //lift is going down
     lift.spin(directionType::rev, liftSpeed, velocityUnits::pct);
   }
   //Going down
-  else if(Controller1.ButtonL2.pressing()) {
+  else if(Controller1.ButtonL2.pressing()) { //lift is going up
     lift.spin(directionType::fwd, liftSpeed, velocityUnits::pct);
   }
   //stopped if no button is being pressed
@@ -110,12 +111,12 @@ void liftwT(int liftSpeed) {
 //Intake function
 void intake(int intakeSpeed) {
   //intaking the cube
-  if(Controller1.ButtonR1.pressing()){
+  if(Controller1.ButtonR1.pressing()){ //intakes the cube in
     leftIntake.spin(directionType::rev, intakeSpeed, velocityUnits::pct);
     rightIntake.spin(directionType::rev, intakeSpeed, velocityUnits::pct);
   }
   //releasing the cube
-  else if(Controller1.ButtonR2.pressing()) {
+  else if(Controller1.ButtonR2.pressing()) { //pushes the cube out (into towers)
     leftIntake.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
     rightIntake.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
   }
@@ -129,12 +130,13 @@ void intake(int intakeSpeed) {
 //Normal (preset) push mechanism
 void pushNorm(int pushSpeed) {
   //Pushing to stack the cubes
-  if(Controller1.ButtonA.pressing()) {
+  if(Controller1.ButtonA.pressing()) { //pushes the tray to stacking position (use this for now)
     push.spin(directionType::fwd, pushSpeed, velocityUnits::pct);
   }
   //Retracting to push back the tray to normal intaking position
   else if(Controller1.ButtonB.pressing()) {
-    push.spin(directionType::rev, 75, velocityUnits::pct);
+    push.spin(directionType::rev, 75, velocityUnits::pct); //tray comes back to normal
+    //Remember to change 75, because that is only a testing value!
   }
   //stops if neither button is being pressed
   else {
@@ -266,22 +268,26 @@ void turnLeft(double degrees, bool blocking) {
   }
 }
 
-//Autonomous reference functions
+//Autonomous reference functions (from previous comp)
+//If the last parameter of the call to the function is set to true, then that means that it is a blocking command, 
+//which means that all the commands before it and itself will have to finish before the autonomous period moves on
+//(before the next commands are executed)
+//If it is false, then it will happen simultaneously, because it is a non-blocking command
 void redL2() {
-  moveForward(18.0, false);
-  lift.rotateFor(-20, rotationUnits::deg, true);
-  leftIntake.rotateFor(-2700, rotationUnits::deg, 100, velocityUnits::pct, false);
-  rightIntake.rotateFor(-2700, rotationUnits::deg, 100, velocityUnits::pct, true);
-  turnLeft(90.0,true);
-  moveForward(19.0,false);
+  moveForward(18.0, false); //18.0 represents inches
+  lift.rotateFor(-20, rotationUnits::deg, true); //-20 refers to the amount the lift will rotate, in degrees
+  leftIntake.rotateFor(-2700, rotationUnits::deg, 100, velocityUnits::pct, false); //-2700 is the amount it will rotate, 100 is velocity (percentage(pct)
+  rightIntake.rotateFor(-2700, rotationUnits::deg, 100, velocityUnits::pct, true); //same thing here, but with the other intake roller
+  turnLeft(90.0,true); //turns left 90.0 degrees
+  moveForward(19.0,false); // 19.0 represents inches
   leftIntake.rotateFor(-3300, rotationUnits::deg, 100, velocityUnits::pct, false);
   rightIntake.rotateFor(-3300, rotationUnits::deg, 100, velocityUnits::pct, true);
   lift.rotateFor(18, rotationUnits::deg, true);
   turnLeft(49.0,true);
   moveForward(18.75,true);
   lift.rotateFor(-40, rotationUnits::deg, true);
-  leftIntake.rotateFor(2600, rotationUnits::deg, 23, velocityUnits::pct, false);
-  rightIntake.rotateFor(2600, rotationUnits::deg, 23, velocityUnits::pct, false);
+  leftIntake.rotateFor(2600, rotationUnits::deg, 23, velocityUnits::pct, false); //velocity is slower here (23), so that it stacks easily
+  rightIntake.rotateFor(2600, rotationUnits::deg, 23, velocityUnits::pct, false); //same thing with other intake
   moveForward(0.6, false);
   lift.rotateFor(310, rotationUnits::deg, 8, velocityUnits::pct, true);
   wait(120,msec);
@@ -363,9 +369,10 @@ void usercontrol(void) {
   task a(liftButton);
   task b(pushButton);
   while (1) {
+    //all of the parameters for all of these calls to the functions are just for testing, so remember to change them if it will be better
     /*printLiftPotValues();*/ //prints lift potentiometer values
     printPushPotValues(); //prints push potentiometer values
-    tankDrive(1.6); //sensitivity = 1.6; sensitivity should be between 1.1(most sensitive) - 2(least sensitive)
+    tankDrive(1.6); //sensitivity = 1.6; sensitivity should be between 1.1(most sensitive) - 2(least sensitive); set to 1 if you want it back to normal
     liftwT(75); //lift controls with tank drive enabled (instead of arcade drive)
     intake(100); //100 sensitivity (for picking up the cubes and for releasing the cubes)
 
