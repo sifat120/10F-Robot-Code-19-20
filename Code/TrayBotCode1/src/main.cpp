@@ -27,6 +27,9 @@
 
 using namespace vex;
 
+//Added the intake motors to be a motor group
+motor_group intakeMotors(leftIntake,rightIntake);
+
 // A global instance of competition
 competition Competition;
 
@@ -57,10 +60,8 @@ void arcadeDrive(double sensitivity) {
   int senseX = pow(x/100, sensitivity) * 100;
   int senseY = pow(y/100, sensitivity) * 100;
 
-  lFront.spin(directionType::fwd,  senseY + senseX, velocityUnits::pct);
-  lBack.spin(directionType::fwd,  senseY + senseX, velocityUnits::pct);
-  rFront.spin(directionType::fwd,  senseY - senseX, velocityUnits::pct);
-  rBack.spin(directionType::fwd,  senseY - senseX, velocityUnits::pct);
+  leftDrive.spin(directionType::fwd,  senseY + senseX, velocityUnits::pct);
+  rightDrive.spin(directionType::fwd,  senseY - senseX, velocityUnits::pct);
 }
 
 //Tank Drive function
@@ -76,10 +77,8 @@ void tankDrive(double sensitivity) {
   int sensely = pow(ly/100, sensitivity) * 100;
   int sensery = pow(ry/100, sensitivity) * 100;
 
-  lFront.spin(directionType::fwd, sensely, velocityUnits::pct);
-  lBack.spin(directionType::fwd, sensely, velocityUnits::pct);
-  rFront.spin(directionType::fwd, sensery, velocityUnits::pct);
-  rBack.spin(directionType::fwd, sensery, velocityUnits::pct);
+  leftDrive.spin(directionType::fwd, sensely, velocityUnits::pct);
+  rightDrive.spin(directionType::fwd, sensery, velocityUnits::pct);
 }
 
 //Lift function (dw about this, because it is for arcade drive)
@@ -112,18 +111,15 @@ void liftwT(int liftSpeed) {
 void intake(int intakeSpeed) {
   //intaking the cube
   if(Controller1.ButtonR1.pressing()){ //intakes the cube in
-    leftIntake.spin(directionType::rev, intakeSpeed, velocityUnits::pct);
-    rightIntake.spin(directionType::rev, intakeSpeed, velocityUnits::pct);
+    intakeMotors.spin(directionType::rev, intakeSpeed, velocityUnits::pct);
   }
   //releasing the cube
   else if(Controller1.ButtonR2.pressing()) { //pushes the cube out (into towers)
-    leftIntake.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
-    rightIntake.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
+    intakeMotors.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
   }
   //stops if neither button is being pressed
   else {
-    leftIntake.stop(brakeType::brake);
-    rightIntake.stop(brakeType::brake);
+    intakeMotors.stop(brakeType::brake);
   }
 }
 
@@ -162,8 +158,9 @@ int pushButton() {
         case 1: 
         pushMechanism(50, 5); //remember to change these values Desired: 50 (percentage), Speed: 5
         case 2:
-        push.spinFor(directionType::rev, 50, rotationUnits::deg, 75, velocityUnits::pct); //rotation unnits(50) has to be same as push mechanism desired
+        push.spinFor(directionType::rev, 50, rotationUnits::deg, 75, velocityUnits::pct); //rotation units(50) has to be same as push mechanism desired
         //If the speed when coming back is too fast, lower the velocity units pct (75)
+        counter = 0;
       }
     }
   }
@@ -179,10 +176,10 @@ void controlLift(int x) {
 int liftButton() {
   while(true) {
     if(Controller1.ButtonX.pressing()) {
-      controlLift(50); //Small tower height *TESTING*
+      controlLift(280); //Small tower height *TESTING*
     }
     else if(Controller1.ButtonY.pressing()) {
-      controlLift(100); //Large tower height *TESTING*
+      controlLift(360); //Large tower height *TESTING*
     }
   }
   //returns nothing, because it just does stuff
@@ -215,64 +212,50 @@ void printPushPotValues() {
 void moveForward1(double distance, bool type) {
   mDegrees1 = (distance/(4*M_PI)) * 360;
   if(type == true) {
-    lFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(mDegrees1, rotationUnits::deg, false);
     rFront.rotateFor(mDegrees1, rotationUnits::deg, false);
     rBack.rotateFor(mDegrees1, rotationUnits::deg, true);
   }
   else {
-    lFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(mDegrees1, rotationUnits::deg, false);
-    rFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    rBack.rotateFor(mDegrees1, rotationUnits::deg, false);
+    allDrive.rotateFor(mDegrees1, rotationUnits::deg, false);
   }
 }
 
 void moveBackward1(double distance, bool type) {
   mDegrees1 = (distance/(4*M_PI)) * 360;
   if(type == true) {
-    lFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(-mDegrees1, rotationUnits::deg, false);
     rFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
     rBack.rotateFor(-mDegrees1, rotationUnits::deg, true);
   }
   else {
-    lFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    rFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    rBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
+    allDrive.rotateFor(-mDegrees1, rotationUnits::deg, false);
   }
 }
 
 void turnRight1(double degrees, bool blocking) {
   mDegrees1 = sqrt(45000)/64 * degrees;
   if(blocking == true) {
-    lFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(mDegrees1, rotationUnits::deg, false);
     rFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
     rBack.rotateFor(-mDegrees1, rotationUnits::deg, true);
   }
   else {
-    lFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(mDegrees1, rotationUnits::deg, false);
-    rFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    rBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(mDegrees1, rotationUnits::deg, false);
+    rightDrive.rotateFor(-mDegrees1, rotationUnits::deg, false);
   }
 }
 
 void turnLeft1(double degrees, bool blocking) {
   mDegrees1 = sqrt(45000)/64 * degrees;
   if(blocking == true) {
-    lFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(-mDegrees1, rotationUnits::deg, false);
     rFront.rotateFor(mDegrees1, rotationUnits::deg, false);
     rBack.rotateFor(mDegrees1, rotationUnits::deg, true);
   }
   else {
-    lFront.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    lBack.rotateFor(-mDegrees1, rotationUnits::deg, false);
-    rFront.rotateFor(mDegrees1, rotationUnits::deg, false);
-    rBack.rotateFor(mDegrees1, rotationUnits::deg, false);
+    leftDrive.rotateFor(-mDegrees1, rotationUnits::deg, false);
+    rightDrive.rotateFor(mDegrees1, rotationUnits::deg, false);
   }
 }
 
@@ -282,8 +265,7 @@ void intaking(double degrees, double speed, bool blocking) {
     rightIntake.rotateFor(degrees, rotationUnits::deg, speed, velocityUnits::pct, true);
   }
   else {
-    leftIntake.rotateFor(degrees, rotationUnits::deg, speed, velocityUnits::pct, false);
-    rightIntake.rotateFor(degrees, rotationUnits::deg, speed, velocityUnits::pct, false);
+    intakeMotors.rotateFor(degrees, rotationUnits::deg, speed, velocityUnits::pct, false);
   }
 }
 
@@ -388,7 +370,7 @@ void usercontrol(void) {
     tankDrive(1.6); //sensitivity = 1.6; sensitivity should be between 1.1(most sensitive) - 2(least sensitive); set to 1 if you want it back to normal
     liftwT(75); //lift controls with tank drive enabled (instead of arcade drive)
     intake(100); //100 sensitivity (for picking up the cubes and for releasing the cubes)
-
+    pushNorm(50); //normal push function, and pushes the tray at 50% speed if button is pressed
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
