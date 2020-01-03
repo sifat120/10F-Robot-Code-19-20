@@ -50,8 +50,8 @@ float mDegrees1; //Motor degrees (used for autonomous)
 //Arcade Drive function
 void arcadeDrive(double sensitivity) {
   int threshold = 10; //Threshold for both joysticks
-  int x = Controller1.Axis4.position(percentUnits::pct); //Left Joystick X-Axis 
-  int y = Controller1.Axis3.position(percentUnits::pct); //Left Joystick Y-Axis
+  int x = Controller1.Axis4.position(pct); //Left Joystick X-Axis 
+  int y = Controller1.Axis3.position(pct); //Left Joystick Y-Axis
 
   if(abs(x) < threshold) x = 0;
   if(abs(y) < threshold) y = 0;
@@ -67,8 +67,8 @@ void arcadeDrive(double sensitivity) {
 //Tank Drive function
 void tankDrive(double sensitivity) {
   int threshold = 10; //Threshold for both joysticks
-  int ly = Controller1.Axis3.position(percentUnits::pct);  //Left Joystick Y-Axis
-  int ry = Controller1.Axis2.position(percentUnits::pct); //Right Joystick Y-Axis
+  int ly = Controller1.Axis3.position(pct);  //Left Joystick Y-Axis
+  int ry = Controller1.Axis2.position(pct); //Right Joystick Y-Axis
 
   if(abs(ly) < threshold) ly = 0;
   if(abs(ry) < threshold) ry = 0;
@@ -84,7 +84,7 @@ void tankDrive(double sensitivity) {
 //Lift function (dw about this, because it is for arcade drive)
 void liftN() {
   int threshold = 10;
-  int ry = Controller1.Axis2.position(percentUnits::pct); //Right Joystick Y-Axis
+  int ry = Controller1.Axis2.position(pct); //Right Joystick Y-Axis
 
  if(abs(ry) < threshold) ry = 0;
 
@@ -144,7 +144,7 @@ void pushNorm(int pushSpeed) {
 void pushMechanism(int desired, int speed) {
   //p part in pid (proportional)
   while(pushPot.value(rotationUnits::deg) != desired){
-    push.spin(directionType::fwd, (desired - pushPot.value(percentUnits::pct))/speed, velocityUnits::pct);
+    push.spin(directionType::fwd, (desired - pushPot.value(pct))/speed, velocityUnits::pct);
   }
 }
 
@@ -195,7 +195,7 @@ void printPushPotValues() {
   //For the push potentiometer values *USE THIS FOR THE BUTTONS THAT DO TASKS*
   Brain.Screen.printAt(1, 20, "Push Potentiometer Values:");
   Brain.Screen.printAt(1, 40, "Rotation: %f degrees", pushPot.value(rotationUnits::deg));
-  Brain.Screen.printAt(1, 60, "Percent: %f %", pushPot.value(percentUnits::pct));
+  Brain.Screen.printAt(1, 60, "Percent: %f %", pushPot.value(pct));
   Brain.Screen.printAt(1, 80, "Analog: %f mV", pushPot.value(analogUnits::mV));
 }
 
@@ -204,7 +204,7 @@ void printPushPotValues() {
   //For the lift potentiometer values *USE THIS FOR THE BUTTONS THAT DO TASKS*
   Brain.Screen.printAt(400, 20, "Lift Potentiometer Values:");
   Brain.Screen.printAt(400, 40, "Rotation: %f degrees", liftPot.value(rotationUnits::deg));
-  Brain.Screen.printAt(400, 60, "Percent: %f %", liftPot.value(percentUnits::pct));
+  Brain.Screen.printAt(400, 60, "Percent: %f %", liftPot.value(pct));
   Brain.Screen.printAt(400, 80, "Analog: %f mV", liftPot.value(analogUnits::mV));
 }*/
 
@@ -346,7 +346,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  
+  moveForward(15);
 }
 
 /*---------------------------------------------------------------------------*/
