@@ -330,6 +330,7 @@ void blueR2() {
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  initPot(); //initializes the push potentiometer value
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -346,7 +347,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  moveForward(15);
+  moveY(15,true); //moves forward 15 inches
 }
 
 /*---------------------------------------------------------------------------*/
