@@ -1,0 +1,25 @@
+void Control::scanLift(){
+  adjActive = true;
+  double liftPos = -lift->rotation(vex::rotationUnits::deg);
+  if(liftPos > 170 && liftPos < 800){
+    tilt->setStopping(vex::brakeType::hold);
+    adjTilt(570);
+  }
+  else{
+    tilt->setStopping(vex::brakeType::coast);
+    adjTilt(0);
+  }
+}
+
+void Control::adjTilt(int val){
+  double potVal = getPot();
+  if(potVal > val){
+    tilt->spin(vex::directionType::fwd,200,vex::velocityUnits::rpm);
+  }
+  if(potVal < val){
+    tilt->spin(vex::directionType::fwd,-200,vex::velocityUnits::rpm);
+  }
+  if(abs(potVal - val) < 30){
+    tilt->spin(vex::directionType::fwd,0,vex::velocityUnits::rpm);
+  }
+}

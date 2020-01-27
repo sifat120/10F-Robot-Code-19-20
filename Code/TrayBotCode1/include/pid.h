@@ -26,12 +26,6 @@ void resetTime() {
   timeStep = 0;
 }
 
-float turnDegreeToRotations(float degree) {
-  float rotationsPerDegree = 0; //This has to be tested first
-  float rotations = degree * rotationsPerDegree;
-  return rotations;
-}
-
 //moves a distance (in inches); forward if true, backward if false
 void moveY(double distance, bool forward) {
   mDegrees = (distance/4*M_PI) * 360;
@@ -54,21 +48,12 @@ void moveY(double distance, bool forward) {
     wait(15, msec);
     timeStep += 15;
   }
-  wait(timeStep, msec);
-  resetTime();
 }
 
 //turns some degrees; right if true, left if false
 void moveX(double normDegrees, bool right) {
-  mDegrees = turnDegreeToRotations(normDegrees);
-  if(right == true){
-    leftDrive.spinFor(directionType::fwd, mDegrees, rotationUnits::deg);
-    rightDrive.spinFor(directionType::rev, mDegrees, rotationUnits::deg);
-  } else {
-    leftDrive.spinFor(directionType::rev, mDegrees, rotationUnits::deg);
-    rightDrive.spinFor(directionType::fwd, mDegrees, rotationUnits::deg);
-    }
-  /*allDrive.resetRotation();
+  mDegrees = sqrt(45000)/64 * normDegrees;
+  allDrive.resetRotation();
   
   kP = 0.3, kI = 0.05, kD = 0.1;
   while(mDegrees > allDrive.rotation(degrees)) { 
@@ -89,7 +74,24 @@ void moveX(double normDegrees, bool right) {
     wait(15, msec);
     timeStep += 15;
   }
-  wait(timeStep, msec);
-  resetTime();
-  */
+}
+
+void blockingY(double distance, bool forward, bool blocking) {
+  moveY(distance,forward);
+  if(blocking == true) {
+    wait(timeStep, msec);
+    resetTime();
+  } else {
+    resetTime();
+  }
+}
+
+void blockingX(double normDegrees, bool right, bool blocking) {
+  moveX(normDegrees,right);
+  if(blocking == true) {
+    wait(timeStep, msec);
+    resetTime();
+  } else {
+    resetTime();
+  }
 }

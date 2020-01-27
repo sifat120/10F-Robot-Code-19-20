@@ -9,14 +9,14 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor lFront = motor(PORT1, ratio18_1, false);
-motor lBack = motor(PORT2, ratio18_1, false);
-motor rFront = motor(PORT3, ratio18_1, false);
-motor rBack = motor(PORT4, ratio18_1, false);
-motor push = motor(PORT5, ratio36_1, false);
-motor lift = motor(PORT6, ratio18_1, false);
-motor leftIntake = motor(PORT7, ratio18_1, false);
-motor rightIntake = motor(PORT8, ratio18_1, false);
+motor lFront = motor(PORT4, ratio18_1, false);
+motor lBack = motor(PORT1, ratio18_1, false);
+motor rFront = motor(PORT9, ratio18_1, true);
+motor rBack = motor(PORT18, ratio18_1, true);
+motor push = motor(PORT8, ratio36_1, true);
+motor lift = motor(PORT7, ratio36_1, false);
+motor leftIntake = motor(PORT12, ratio18_1, true);
+motor rightIntake = motor(PORT6, ratio18_1, false);
 pot pushPot = pot(Brain.ThreeWirePort.A);
 
 // VEXcode generated functions
