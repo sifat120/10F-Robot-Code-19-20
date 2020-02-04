@@ -1,11 +1,6 @@
-#include "vex.h"
+#include "print.h"
 
 using namespace vex;
-
-//Motor groups (for drivetrain)
-motor_group leftDrive(lFront,lBack);
-motor_group rightDrive(rFront,rBack);
-motor_group allDrive(lFront,lBack,rFront,rBack);
 
 //Motor degrees
 float mDegrees;
