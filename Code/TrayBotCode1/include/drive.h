@@ -19,10 +19,6 @@ void arcadeDrive(double sensitivity) {
   if(abs(x) < threshold) x = 0;
   if(abs(y) < threshold) y = 0;
 
-  //senseX and senseY are for sensitivities
-  //int senseX = pow(x/100, sensitivity) * 100;
-  //int senseY = pow(y/100, sensitivity) * 100;
-
   leftDrive.spin(directionType::fwd,  y + x, velocityUnits::pct);
   rightDrive.spin(directionType::fwd,  y - x, velocityUnits::pct);
 }
