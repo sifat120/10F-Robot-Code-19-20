@@ -26,7 +26,7 @@ void moveY(double distance, bool forward) {
   mDegrees = (distance/4*M_PI) * 360;
   allDrive.resetRotation();
 
-  kP = 0.3, kI = 0.05, kD = 0.1;
+  kP = 0.3, kI = 0.05, kD = 0.1; //test these values
   while(mDegrees > allDrive.rotation(degrees)) { 
     error = mDegrees - allDrive.rotation(degrees);
     integral += error;
@@ -50,7 +50,7 @@ void moveX(double normDegrees, bool right) {
   mDegrees = sqrt(45000)/64 * normDegrees;
   allDrive.resetRotation();
   
-  kP = 0.3, kI = 0.05, kD = 0.1;
+  kP = 0.3, kI = 0.05, kD = 0.1; //test these values
   while(mDegrees > allDrive.rotation(degrees)) { 
     error = mDegrees - allDrive.rotation(degrees);
     integral += error;
