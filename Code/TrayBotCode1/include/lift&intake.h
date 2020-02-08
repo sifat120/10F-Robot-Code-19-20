@@ -19,7 +19,6 @@ void liftwT(int liftSpeed) {
   //Going down
   else if(Controller1.ButtonL2.pressing()) { //lift is going up
     lift.spin(directionType::fwd, liftSpeed, velocityUnits::pct);
-    //push.rotateFor(directionType::fwd, 60, rotationUnits::deg);
   }
   //stopped if no button is being pressed
   else {
@@ -27,6 +26,7 @@ void liftwT(int liftSpeed) {
   }
 } 
 
+//Adjusts the push mechanism as lift is going up
 void adjustTilt(int val) {
   double potVal = lift.rotation(rotationUnits::deg);
 
@@ -41,6 +41,7 @@ void adjustTilt(int val) {
   }*/
 }
 
+//Scans the position of the lift and moves the tray out accordingly
 void scanLift() {
   double liftPos = lift.rotation(rotationUnits::deg);
   if(liftPos > 170 && liftPos < 800){

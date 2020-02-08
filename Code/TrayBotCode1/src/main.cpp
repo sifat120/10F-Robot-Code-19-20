@@ -91,7 +91,7 @@ void usercontrol(void) {
     tankDrive(); 
     liftwT(100); //lift controls with tank drive enabled (instead of arcade drive)
     intake(100); //100 sensitivity for releasing the cubes and intaking cubes
-    pushStack(870, 10); //normal push function, with desired as 835 degrees and speed as 8
+    pushStack(1200, 0.3); //normal push function, with desired as 1025 degrees and speed as 14
     pullout(20,28); //drive speed is 20, and intake speed is 28 (need to make it faster)
     isPressed(); //all the button pressed functions
     fastIntake(); //for putting the cubes into towers at 100% velocity
