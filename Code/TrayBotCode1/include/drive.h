@@ -25,7 +25,7 @@ void arcadeDrive(double sensitivity) {
 
 //Tank Drive function
 void tankDriveSense(double sensitivity) {
-  double threshold = 5; //Threshold for both joysticks
+  double threshold = 10; //Threshold for both joysticks
   double ly = Controller1.Axis3.position(percentUnits::pct); //Left Joystick Y-Axis
   double ry = Controller1.Axis2.position(percentUnits::pct); //Right Joystick Y-Axis
 
@@ -56,24 +56,4 @@ void tankDrive() {
 
   leftDrive.spin(directionType::fwd, ly, velocityUnits::pct);
   rightDrive.spin(directionType::fwd, ry, velocityUnits::pct);
-}
-
-void driverHold() {
-  allDrive.stop(brakeType::hold);
-}
-
-void driverCoast() {
-  allDrive.stop(brakeType::coast);
-}
-
-void isPressed() {
-  Controller1.ButtonA.pressed(driverHold);
-  Controller1.ButtonB.pressed(driverCoast);
-}
-
-void pullout(double driveSpeed, double intakeSpeed) {
-  if(Controller1.ButtonY.pressing()) {
-    allDrive.spin(directionType::rev, driveSpeed, velocityUnits::pct);
-    intakeMotors.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
-  }
 }

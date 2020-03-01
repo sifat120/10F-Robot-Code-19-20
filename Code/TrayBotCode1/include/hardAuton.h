@@ -3,6 +3,7 @@
 //Autonomous movement functions
 void moveForward(double distance, bool type) {
   mDegrees = (distance/(4*M_PI)) * 360;
+  Brain.Screen.printAt(1, 80, "Mdegrees: %f", mDegrees);
   if(type == true) {
     leftDrive.rotateFor(mDegrees, rotationUnits::deg, false);
     rFront.rotateFor(mDegrees, rotationUnits::deg, false);
@@ -65,18 +66,29 @@ void intaking(double degrees, double speed, bool blocking) {
 
 //function to deploy the robot
 void deploy(){
-  intakeMotors.spinFor(directionType::fwd, 800, rotationUnits::deg, 100, velocityUnits::pct, true);
-  wait(1.25,sec);
-  moveBackward(2,false);
+  intakeMotors.rotateFor(directionType::fwd, 600, rotationUnits::deg, 100, velocityUnits::pct, false);
+  lift.rotateFor(directionType::fwd, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
+  moveBackward(2.5,false);
+  wait(1.3,sec);
+  lift.rotateFor(directionType::rev, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
+  wait(1.3,sec);
+//moveBackward(2,false);
 }
 
 //function to stack the cubes
 void stack() {
-  intaking(500,40,true);
-  wait(0.35,sec);
-  push.rotateFor(480, rotationUnits::deg, 45, velocityUnits::pct, true);
-  allDrive.spinFor(directionType::rev, 1000, rotationUnits::deg, 20, velocityUnits::pct);
-  intakeMotors.spinFor(directionType::fwd, 2000, rotationUnits::deg, 28, velocityUnits::pct);
+  /*while(push.rotation(rotationUnits::deg) <= 718) { //pushes the tray to stacking position
+    push.spin(directionType::fwd, (825 - push.rotation(rotationUnits::deg))/6,velocityUnits::pct);
+    intakeMotors.spin(directionType::fwd, 5, percentUnits::pct);
+  }*/
+  push.rotateFor(directionType::fwd, 710, rotationUnits::deg, (730 - push.rotation(rotationUnits::deg))/10, velocityUnits::pct, false);
+  intakeMotors.rotateFor(directionType::fwd, 370, rotationUnits::deg, 5.5, velocityUnits::pct, false);
+
+}
+
+void pulloutAuton() {
+  allDrive.rotateFor(directionType::rev, 2000, rotationUnits::deg, 20, velocityUnits::pct, false);
+  intakeMotors.rotateFor(directionType::fwd, 1500, rotationUnits::deg, 28.5, velocityUnits::pct, false);
 }
 
 //backup auton (only 1 cube)

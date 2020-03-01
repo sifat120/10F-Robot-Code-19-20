@@ -1,18 +1,3 @@
-
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// lFront               motor         4               
-// lBack                motor         1               
-// rFront               motor         9               
-// rBack                motor         18              
-// push                 motor         8               
-// lift                 motor         7               
-// leftIntake           motor         12              
-// rightIntake          motor         6               
-// pushPot              pot           A               
-// ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
@@ -39,6 +24,13 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+void pullout(double driveSpeed, double intakeSpeed) {
+  if(Controller1.ButtonX.pressing()) {
+    allDrive.spin(directionType::rev, driveSpeed, velocityUnits::pct);
+    intakeMotors.spin(directionType::fwd, intakeSpeed, velocityUnits::pct);
+  }
+}
+
 //initializes all of the potentiometers *USED AFTER TESTING (RESET VALUE)*
 //called in the pre auton function, because that is before auton, or before the start of the match
 void pre_auton(void) {
@@ -46,6 +38,8 @@ void pre_auton(void) {
   vexcodeInit();
   intakeMotors.setStopping(brakeType::hold);
   lift.setStopping(brakeType::hold);
+  lift.resetRotation();
+  allDrive.resetRotation();
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -67,6 +61,14 @@ void autonomous(void) {
   //redR();
   //blueL();
   //blueR();
+  //moveForward(15,true);
+  intaking(-4500,100,false);
+  blockingY(55,true,true);
+  intaking(150,40,false);
+  wait(2.5,sec);
+  stack();
+  wait(1.5,sec);
+  pulloutAuton();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -80,22 +82,18 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  //User control code here, inside the loop
-  /*task a(liftButton); //when the lift button is pressed, lift goes up to specific tower height
-  task b(driveSelector); //allows the driver to select the brake type of the motor
-  task b(pushButton); //when the push button is pressed, the tray pushes cubes to become stacked
-  task c(intakeRev); //buttons for when the intake is being reversed*/
+  task a(quickStack); //Makes a quick stack of 8 or less cubes
+  task b(buttonPressedNew); //should move the lift when button is pressed
   while (1) {
     //all of the parameters for all of these calls to the functions are just for testing, so remember to change them if it will be better
     printValues(); //prints values to the brain
-    tankDrive(); 
-    liftwT(100); //lift controls with tank drive enabled (instead of arcade drive)
+    tankDrive(); //for the drive
+    liftwT(100); //lift controls with tank drive enabled
     intake(100); //100 sensitivity for releasing the cubes and intaking cubes
-    pushStack(1200, 0.3); //normal push function, with desired as 1025 degrees and speed as 14
-    pullout(20,28); //drive speed is 20, and intake speed is 28 (need to make it faster)
-    isPressed(); //all the button pressed functions
-    fastIntake(); //for putting the cubes into towers at 100% velocity
-    //scanLift(); //to move the tray forward after the lift is raised (testing)
+    pushStack(1000, 14); //normal push function, with desired as 1000 degrees and speed as 14
+    pullout(40,48.5); //original drive speed is 20, and intake speed is 28.5
+    fastOuttake(); //for putting the cubes into towers at 100% velocity
+    //fastStack(); //for stacking fast (potentially the middle tower)
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
