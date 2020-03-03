@@ -28,20 +28,20 @@ void liftwT() {
   //   lift.stop(brakeType::hold);
   // }
     if(Controller1.ButtonL1.pressing()) {
-      while(Controller1.ButtonL1.pressing()) {
+      //while(Controller1.ButtonL1.pressing()) {
         lift.spin(directionType::fwd, 100, velocityUnits::pct);
-      }
-      lift.stop(brakeType::hold);
+      //}
+      //lift.stop(brakeType::hold);
     }
     else if(Controller1.ButtonL2.pressing() && lift.rotation(rotationUnits::deg) >= 0) {
-      while(Controller1.ButtonL2.pressing()) {
+      //while(Controller1.ButtonL2.pressing()) {
         lift.spin(directionType::rev, 100, velocityUnits::pct);
-      }
+      //}
+      //lift.stop(brakeType::hold);
+    }
+    else {
       lift.stop(brakeType::hold);
     }
-    /*else {
-      lift.stop(brakeType::hold);
-    }*/
   //}
   //return(0);
 } 
@@ -64,35 +64,35 @@ void intake() {
   //   intakeMotors.stop(brakeType::hold); 
   // }
   if(Controller1.ButtonR1.pressing()) {
-    while(Controller1.ButtonR1.pressing()) {
+    //while(Controller1.ButtonR1.pressing()) {
       intakeMotors.spin(directionType::rev, 100, velocityUnits::pct);
       //intakeMotors.spin(directionType::rev, 12, voltageUnits::volt);
-    }
-    intakeMotors.stop(brakeType::hold);
+    //}
+    //intakeMotors.stop(brakeType::hold);
   }
   else if(Controller1.ButtonR2.pressing()) {
-    while(Controller1.ButtonR2.pressing()) {
+    //while(Controller1.ButtonR2.pressing()) {
       intakeMotors.spin(directionType::fwd, 55, velocityUnits::pct);
-    }
-    intakeMotors.stop(brakeType::hold);
+    //}
+    //intakeMotors.stop(brakeType::hold);
   }
   //}
   //return(0);
-    /*else {
+  else {
       intakeMotors.stop(brakeType::hold);
-    }*/
+  }
 }
 
 
 
 //Fast reverse intake function
-void fastOuttake() {
+void moveTray() {
   //while(true) {
   if(Controller1.ButtonLeft.pressing()) { //pushes the cube out (into towers if far away)
     //intakeMotors.spin(directionType::fwd, 100, velocityUnits::pct);
-    while(Controller1.ButtonLeft.pressing()) {
+    //while(Controller1.ButtonLeft.pressing()) {
       push.spin(directionType::fwd,30,velocityUnits::pct);
-    }
+    //}
   }
   //}
   //return(0);

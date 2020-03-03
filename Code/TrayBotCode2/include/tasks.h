@@ -92,12 +92,13 @@ void quickSmallStack() {
 int quickStack() {
   while(true) {
     //Controller1.ButtonRight.pressed(quickSmallStack);
-    if(Controller1.ButtonRight.pressing()) {
-      while(Controller1.ButtonRight.pressing()){}
-      /*while(push.rotation(rotationUnits::deg) <= 720) { //pushes the tray to stacking position (use this for now)*/
-      intakeMotors.rotateFor(directionType::fwd,60,rotationUnits::deg,5,velocityUnits::pct,false);
-      push.startRotateTo(720,rotationUnits::deg, (825 - push.rotation(rotationUnits::deg))/10,velocityUnits::pct); //was 850 and 8
-    }
+    // if(Controller1.ButtonRight.pressing()) {
+    //   while(Controller1.ButtonRight.pressing()){}
+    //   /*while(push.rotation(rotationUnits::deg) <= 720) { //pushes the tray to stacking position (use this for now)*/
+    //   intakeMotors.rotateFor(directionType::fwd,60,rotationUnits::deg,5,velocityUnits::pct,false);
+    //   push.startRotateTo(720,rotationUnits::deg, (825 - push.rotation(rotationUnits::deg))/10,velocityUnits::pct); //was 850 and 8
+    // }
+    Controller1.ButtonRight.pressed(quickSmallStack);
   }
   return(0);
 }

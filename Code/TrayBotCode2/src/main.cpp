@@ -83,10 +83,10 @@ void autonomous(void) {
 void usercontrol(void) {
   task a(quickStack); //Makes a quick stack of 8 or less cubes
   task b(buttonPressedNew); //should move the lift when button is pressed
-  // task c(intake);
+  //task c(intake);
   //task d(fastOuttake);
   //task e(pullout);
-  // task f(liftwT);
+  //task f(liftwT);
   //task g(pushStack);
   //task h(tankDrive);
   while (1) {
@@ -97,7 +97,7 @@ void usercontrol(void) {
     intake(); //100 sensitivity for releasing the cubes and intaking cubes
     pushStack(); //normal push function, with desired as 1000 degrees and speed as 14
     pullout(); //original drive speed is 20, and intake speed is 28.5
-    fastOuttake(); //for putting the cubes into towers at 100% velocity
+    moveTray(); //moves tray forward a little bit
     //fastStack(); //for stacking fast (potentially the middle tower)
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
