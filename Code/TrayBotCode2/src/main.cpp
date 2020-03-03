@@ -83,21 +83,21 @@ void autonomous(void) {
 void usercontrol(void) {
   task a(quickStack); //Makes a quick stack of 8 or less cubes
   task b(buttonPressedNew); //should move the lift when button is pressed
-  task c(intake);
-  task d(fastOuttake);
-  task e(pullout);
-  task f(liftwT);
-  task g(pushStack);
-  task h(tankDrive);
+  // task c(intake);
+  //task d(fastOuttake);
+  //task e(pullout);
+  // task f(liftwT);
+  //task g(pushStack);
+  //task h(tankDrive);
   while (1) {
     //all of the parameters for all of these calls to the functions are just for testing, so remember to change them if it will be better
     printValues(); //prints values to the brain
-    //tankDrive(); //for the drive
-    //liftwT(100); //lift controls with tank drive enabled
-    //intake(); //100 sensitivity for releasing the cubes and intaking cubes
-    //pushStack(1000, 14); //normal push function, with desired as 1000 degrees and speed as 14
-    //pullout(40,49.5); //original drive speed is 20, and intake speed is 28.5
-    //fastOuttake(); //for putting the cubes into towers at 100% velocity
+    tankDrive(); //for the drive
+    liftwT(); //lift controls with tank drive enabled
+    intake(); //100 sensitivity for releasing the cubes and intaking cubes
+    pushStack(); //normal push function, with desired as 1000 degrees and speed as 14
+    pullout(); //original drive speed is 20, and intake speed is 28.5
+    fastOuttake(); //for putting the cubes into towers at 100% velocity
     //fastStack(); //for stacking fast (potentially the middle tower)
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

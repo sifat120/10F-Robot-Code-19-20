@@ -11,8 +11,8 @@ void liftN() {
 }
 
 //Lift function when tank drive function is enabled
-int liftwT() {
-  while(true){
+void liftwT() {
+  //while(true){
   // //Going up
   // if(Controller1.ButtonL1.pressing()) { //lift is going down
   //   while(Controller1.ButtonL1.pressing()) {
@@ -42,13 +42,13 @@ int liftwT() {
     /*else {
       lift.stop(brakeType::hold);
     }*/
-  }
-  return(0);
+  //}
+  //return(0);
 } 
 
 //Intake function 
-int intake() {
-  while(true) {
+void intake() {
+  //while(true) {
   // //intaking the cube
   // if(Controller1.ButtonR1.pressing()) { 
   //   while(Controller1.ButtonR1.pressing()){
@@ -76,8 +76,8 @@ int intake() {
     }
     intakeMotors.stop(brakeType::hold);
   }
-  }
-  return(0);
+  //}
+  //return(0);
     /*else {
       intakeMotors.stop(brakeType::hold);
     }*/
@@ -86,26 +86,25 @@ int intake() {
 
 
 //Fast reverse intake function
-int fastOuttake() {
-  while(true) {
+void fastOuttake() {
+  //while(true) {
   if(Controller1.ButtonLeft.pressing()) { //pushes the cube out (into towers if far away)
     //intakeMotors.spin(directionType::fwd, 100, velocityUnits::pct);
     while(Controller1.ButtonLeft.pressing()) {
       push.spin(directionType::fwd,30,velocityUnits::pct);
     }
   }
-  }
-  return(0);
+  //}
+  //return(0);
 }
 
 //for the smaller tower
 void smallTower() {
-  /*while(lift.rotation(rotationUnits::deg) <= 475) {
+  while(lift.rotation(rotationUnits::deg) <= 475) {
     push.spin(directionType::fwd, 15, velocityUnits::pct);
     lift.spin(directionType::fwd, 95, velocityUnits::pct);
-  }*/
-   push.startRotateFor(directionType::fwd,200,rotationUnits::deg,10,velocityUnits::pct);
-   lift.startRotateFor(directionType::fwd,500,rotationUnits::deg,100,velocityUnits::pct);
+  }
+  
   // if(Controller1.ButtonX.pressing()) {
   //     while(Controller1.ButtonX.pressing()) {}
   //     push.stop(brakeType::hold);
@@ -133,13 +132,11 @@ int buttonPressedNew() {
   while(true) {
     if(Controller1.ButtonB.pressing()) {
       while(Controller1.ButtonB.pressing()) {}
-      push.startRotateTo(250,rotationUnits::deg,35,velocityUnits::pct);
-      lift.startRotateTo(500,rotationUnits::deg,100,velocityUnits::pct);
+      smallTower();
     }
     else if(Controller1.ButtonA.pressing()) {
       while(Controller1.ButtonA.pressing()) {}
-      push.startRotateTo(250,rotationUnits::deg,25,velocityUnits::pct);
-      lift.startRotateTo(650,rotationUnits::deg,100,velocityUnits::pct);
+      mediumTower();
     }
   }
   return(0);

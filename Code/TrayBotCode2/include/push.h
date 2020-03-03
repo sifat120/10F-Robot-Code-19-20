@@ -13,8 +13,8 @@ void stackNorm(int desired, double speed) {
 }
 
 //Normal (preset) push mechanism
-int pushStack() {
-  while(true) {
+void pushStack() {
+  //while(true) {
   //Pushing to stack the cubes
   if(Controller1.ButtonUp.pressing() && push.rotation(rotationUnits::deg) <= 735) { //pushes the tray to stacking position (use this for now)
     while(Controller1.ButtonUp.pressing() && push.rotation(rotationUnits::deg) <= 735){
@@ -35,8 +35,8 @@ int pushStack() {
     }
     push.stop(brakeType::hold);
   }
-  }
-  return(0);
+  /*}
+  return(0);*/
   //stops if neither button is being pressed
   /*else {
     push.stop(brakeType::hold);

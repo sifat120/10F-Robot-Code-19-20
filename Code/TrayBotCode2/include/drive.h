@@ -46,8 +46,7 @@ void tankDriveSense(double sensitivity) {
   rightDrive.spin(directionType::fwd, sensery, velocityUnits::pct);
 }
 
-int tankDrive() {
-  while(true){
+void tankDrive() {
   int threshold = 10; //Threshold for both joysticks
   int ly = Controller1.Axis3.position(percentUnits::pct); //Left Joystick Y-Axis
   int ry = Controller1.Axis2.position(percentUnits::pct); //Right Joystick Y-Axis
@@ -57,12 +56,11 @@ int tankDrive() {
 
   leftDrive.spin(directionType::fwd, ly, velocityUnits::pct);
   rightDrive.spin(directionType::fwd, ry, velocityUnits::pct);
-  }
-  return(0);
 }
 
-int pullout() {
-  while(true){
+
+void pullout() {
+  //while(true){
   if(Controller1.ButtonX.pressing()) {
     while(Controller1.ButtonX.pressing()) {
     intakeMotors.spin(directionType::fwd, 49.5, velocityUnits::pct);
@@ -72,6 +70,6 @@ int pullout() {
     allDrive.spin(directionType::rev, 40, velocityUnits::pct);
   }
   }
-  }
-  return(0);
+  /*}
+  return(0);*/
 }
