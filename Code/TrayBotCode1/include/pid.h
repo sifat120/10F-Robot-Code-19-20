@@ -30,15 +30,16 @@ void moveY(double distance, int driveSpeed, bool forward) {
   allDrive.resetRotation();
   mDegrees = (distance/(4*M_PI)) * 360;
   Brain.Screen.printAt(1, 20, "mDegrees: %f", mDegrees);
-  error=mDegrees - allDrive.rotation(rotationUnits::deg);
+  //if(){}
+  error = mDegrees - fabs(allDrive.rotation(rotationUnits::deg));
 
   kP = 0.3, kI = 0.000, kD = 0.295; //kP = 0.3, kI = 0.05, kD = 0.1, 0.28
-  while(error>45) { 
+  while(error>60) { 
     Brain.Screen.printAt(1, 40, "Rotation: %f", allDrive.rotation(rotationUnits::deg));
-    error = mDegrees - allDrive.rotation(rotationUnits::deg); 
+    error = mDegrees - fabs(allDrive.rotation(rotationUnits::deg)); 
     Brain.Screen.printAt(1, 60, "Error: %f", error);
     integral += error;
-    if((allDrive.rotation(rotationUnits::deg) > mDegrees)) integral = 0; 
+    if((fabs(allDrive.rotation(rotationUnits::deg)) > mDegrees)) integral = 0; 
     if (error > 75) integral = 0; //test out the 50
     derivative = error - prevError;
     Brain.Screen.printAt(1, 80, "Derivative: %f", derivative);
@@ -56,7 +57,9 @@ void moveY(double distance, int driveSpeed, bool forward) {
     wait(15, msec);
     timeStep += 15;
   }
+  allDrive.stop(brakeType::brake);
   resetVariables();
+  allDrive.resetRotation();
 }
 
 //turns some degrees; right if true, left if false
@@ -88,13 +91,11 @@ void moveX(double normDegrees, bool right) {
 }
 
 void blockingY(double distance, int driveSpeed, bool forward, bool blocking) {
-  moveY(distance,driveSpeed,forward);
   if(blocking == true) {
     wait(timeStep, msec);
-    resetTime();
-  } else {
-    resetTime();
   }
+  moveY(distance,driveSpeed,forward);
+  resetTime();
 }
 
 void blockingX(double normDegrees, bool right, bool blocking) {

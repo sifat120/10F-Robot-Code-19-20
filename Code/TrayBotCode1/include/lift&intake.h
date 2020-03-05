@@ -86,14 +86,14 @@ int intake() {
 
 
 //Fast reverse intake function
-int fastOuttake() {
+int reset() {
   while(true) {
-  if(Controller1.ButtonLeft.pressing()) { //pushes the cube out (into towers if far away)
-    //intakeMotors.spin(directionType::fwd, 100, velocityUnits::pct);
-    while(Controller1.ButtonLeft.pressing()) {
-      push.spin(directionType::fwd,30,velocityUnits::pct);
+    if(Controller1.ButtonLeft.pressing()) { //pushes the cube out (into towers if far away)
+      //intakeMotors.spin(directionType::fwd, 100, velocityUnits::pct);
+      while(Controller1.ButtonLeft.pressing()) {}
+      push.startRotateTo(0,rotationUnits::deg,35,velocityUnits::pct);
+      lift.startRotateTo(0,rotationUnits::deg,100,velocityUnits::pct);
     }
-  }
   }
   return(0);
 }

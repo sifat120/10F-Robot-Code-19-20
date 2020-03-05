@@ -79,25 +79,31 @@ int scanLift() {
 }
 
 void quickSmallStack() {
-  while(push.rotation(rotationUnits::deg) <= 720) { //pushes the tray to stacking position (use this for now)
+  while(push.rotation(rotationUnits::deg) <= 704) { //pushes the tray to stacking position (use this for now)
     push.spin(directionType::fwd, (825 - push.rotation(rotationUnits::deg))/6,velocityUnits::pct); //was 850 and 8
-    intakeMotors.spin(directionType::fwd, 4.85, percentUnits::pct);
+    if(push.rotation(rotationUnits::deg) <= 400){
+      intakeMotors.spin(directionType::fwd, 5, percentUnits::pct);
+    } else {
+      intakeMotors.stop(brakeType::coast);
+    }
     /*if(Controller1.ButtonX.pressing()) {
       while(Controller1.ButtonX.pressing()) {}
       break;
     }*/
   }
+  push.stop(brakeType::hold);
+  intakeMotors.stop(brakeType::hold);
 }
 
 int quickStack() {
   while(true) {
-    //Controller1.ButtonRight.pressed(quickSmallStack);
-    if(Controller1.ButtonRight.pressing()) {
+    Controller1.ButtonRight.pressed(quickSmallStack);
+    /*if(Controller1.ButtonRight.pressing()) {
       while(Controller1.ButtonRight.pressing()){}
-      /*while(push.rotation(rotationUnits::deg) <= 720) { //pushes the tray to stacking position (use this for now)*/
+      while(push.rotation(rotationUnits::deg) <= 720) { //pushes the tray to stacking position (use this for now)
       intakeMotors.rotateFor(directionType::fwd,60,rotationUnits::deg,5,velocityUnits::pct,false);
       push.startRotateTo(720,rotationUnits::deg, (825 - push.rotation(rotationUnits::deg))/10,velocityUnits::pct); //was 850 and 8
-    }
+    }*/
   }
   return(0);
 }

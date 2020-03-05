@@ -94,7 +94,7 @@ void intaking(double degrees, double speed, bool blocking) {
 void deploy(){
   intakeMotors.rotateFor(directionType::fwd, 600, rotationUnits::deg, 100, velocityUnits::pct, false);
   lift.rotateFor(directionType::fwd, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
-  moveBackward(2.5,false);
+  //moveBackward(2.5,false);
   wait(1.3,sec);
   lift.rotateFor(directionType::rev, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
   wait(1.3,sec);
@@ -107,8 +107,8 @@ void stack() {
     push.spin(directionType::fwd, (825 - push.rotation(rotationUnits::deg))/6,velocityUnits::pct);
     intakeMotors.spin(directionType::fwd, 5, percentUnits::pct);
   }*/
-  push.rotateFor(directionType::fwd, 710, rotationUnits::deg, (730 - push.rotation(rotationUnits::deg))/10, velocityUnits::pct, false);
-  intakeMotors.rotateFor(directionType::fwd, 370, rotationUnits::deg, 5.5, velocityUnits::pct, true);
+  push.rotateFor(directionType::fwd, 710, rotationUnits::deg, (730 - push.rotation(rotationUnits::deg))/11, velocityUnits::pct, false);
+  intakeMotors.rotateFor(directionType::fwd, 90, rotationUnits::deg, 5.5, velocityUnits::pct, true);
 
 }
 
