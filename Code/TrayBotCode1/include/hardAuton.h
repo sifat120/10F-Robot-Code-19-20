@@ -94,7 +94,7 @@ void intaking(double degrees, double speed, bool blocking) {
 void deploy(){
   intakeMotors.rotateFor(directionType::fwd, 600, rotationUnits::deg, 100, velocityUnits::pct, false);
   lift.rotateFor(directionType::fwd, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
-  //moveBackward(2.5,false);
+  moveBackward(2.5,false);
   wait(1.3,sec);
   lift.rotateFor(directionType::rev, 1000, rotationUnits::deg, 100, velocityUnits::pct, false);
   wait(1.3,sec);

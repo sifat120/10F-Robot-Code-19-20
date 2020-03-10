@@ -1,18 +1,16 @@
 #include "skills.h"
 
 //Actual autonomous functions for different parts of the field
-  void redL() { //2 cubes (not done)
+  void redL() { //3 cubes
     deploy();
     intaking(-6500,100,false);
     moveForward(20,true);
-    turnRight(92, true);
-    moveForward(14, true);
-    turnRight(155,true);
-    moveForward(11,false);
+    turnLeft(92, true);
+    moveForward(18, true);
     intaking(150,40,false);
-    wait(2,sec);
+    turnLeft(30,true);
+    moveForward(11,true);
     stack();
-    wait(1.5,sec);
     pulloutAuton();
   }
 
@@ -42,6 +40,7 @@
     pulloutAuton();
   }
 
+  //3 cube auton
   void blueR() {
     deploy();
     intaking(-5500,100,false);
@@ -49,11 +48,9 @@
     turnRight(92, true);
     moveForward(18, true);
     turnRight(30,true);
-    moveForward(9,false);
     intaking(150,40,false);
-    wait(0.75,sec);
+    moveForward(9,true);
     stack();
-    wait(1.75,sec);
     pulloutAuton();
   }
 
@@ -136,4 +133,11 @@
     blockingY(28.25,68,true,true);
     stack();
     pulloutAuton();
+  }
+
+  void blueR3() {
+    deploy();
+    intaking(-4500,100,false);
+    blockingY(20,55,true,true);
+    turnLeft(90,true);
   }

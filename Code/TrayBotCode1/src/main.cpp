@@ -57,9 +57,9 @@ void autonomous(void) {
   //redR();
   //blueL();
   //blueR();
-  //redL2();
   //blueL3();
-  redR3();
+  //redR3();
+  blueR3();
   //turnLeft(90,true);
   //moveForward(15,true);
   /*deploy();
