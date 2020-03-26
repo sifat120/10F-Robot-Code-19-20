@@ -26,9 +26,9 @@ void on_center_button() {
  */
 void initialize() {
 	lcd::initialize();
-	lcd::set_text(1, "Hello PROS User!");
+	lcd::set_text(0, "Initializing the brain...");
 
-	lcd::register_btn1_cb(on_center_button);
+	
 }
 
 /**
@@ -87,7 +87,7 @@ void opcontrol() {
 		setLiftMotor();
 		//control angler
 		setAnglerMotor();
-		
+
 		delay(10);
 	}
 }
