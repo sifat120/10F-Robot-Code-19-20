@@ -61,7 +61,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	
+
 }
 
 /**
@@ -78,5 +78,16 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	
+	while(true) {
+		//control drive
+		setDriveMotors();
+		//control intake
+		setIntakeMotors();
+		//control lift
+		setLiftMotor();
+		//control angler
+		setAnglerMotor();
+		
+		delay(10);
+	}
 }
