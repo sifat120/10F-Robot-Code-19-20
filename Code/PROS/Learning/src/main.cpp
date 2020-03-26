@@ -28,7 +28,7 @@ void initialize() {
 	lcd::initialize();
 	lcd::set_text(0, "Initializing the brain...");
 
-	
+
 }
 
 /**
