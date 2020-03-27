@@ -28,6 +28,19 @@ void initialize() {
 	lcd::initialize();
 	lcd::set_text(0, "Initializing the brain...");
 
+	//initializing brake modes for all of the motors
+	lFront.set_brake_mode(E_MOTOR_BRAKE_COAST); //brake type coast
+	lBack.set_brake_mode(E_MOTOR_BRAKE_COAST);
+	rFront.set_brake_mode(E_MOTOR_BRAKE_COAST);
+	rBack.set_brake_mode(E_MOTOR_BRAKE_COAST);
+	lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+	intakeRight.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	intakeLeft.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	angler.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+
+	//initialize the gyro
+	ADIGyro gyro('B', 1.05);
+	delay(2000);
 
 }
 

@@ -34,7 +34,10 @@
  */
 #define PROS_USE_LITERALS
 
+#define _USE_MATH_DEFINES
+
 #include "api.h"
+#include <math.h>
 
 /**
  * You should add more #includes here

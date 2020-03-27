@@ -14,3 +14,6 @@ extern Motor rBack;
 
 //Controller
 extern Controller controller;
+
+//Miscellanous
+extern ADIGyro gyro;
