@@ -1,7 +1,5 @@
 #include "main.h"
 
-using namespace pros;
-
 //MOTORS
 extern Motor lift; //all of these declare motors as global but don't initialize them
 extern Motor angler;

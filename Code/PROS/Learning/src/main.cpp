@@ -91,6 +91,11 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+
+	// odomDebug display(lv_scr_act(), LV_COLOR_ORANGE);
+	// display.setStateCallback(setState);
+	// display.setResetCallback(resetSensors);
+
 	while(true) {
 		//control drive
 		setDriveMotors();

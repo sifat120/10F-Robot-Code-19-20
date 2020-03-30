@@ -1,7 +1,5 @@
 #include "main.h"
 
-using namespace pros;
-
 //Motors
 Motor lift(1,E_MOTOR_GEARSET_36,false,E_MOTOR_ENCODER_COUNTS);
 //1 is port number
