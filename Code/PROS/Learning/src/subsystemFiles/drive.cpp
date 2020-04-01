@@ -64,3 +64,30 @@ void translate(int distance, int voltage){
     //set drive back to normal
     setDrive(0,0);
 }
+
+void rotate(int degrees, int voltage) {
+    //define direction, based on the units provided
+    int direction = abs(degrees)/degrees;
+    //resetting the gyro
+    gyro.reset();
+    //turn until units are reached
+    setDrive(-voltage*direction, voltage*direction);
+    while(fabs(gyro.get_value()) < abs(degrees * 10)) {
+        delay(10);
+    }
+    delay(100);
+    if(fabs(gyro.get_value()) > abs(degrees * 10)){
+        while(fabs(gyro.get_value()) > abs(degrees * 10)) {
+        setDrive(0.5*voltage*direction, 0.5*-voltage*direction);
+        delay(10);
+        }
+    }
+    else if(fabs(gyro.get_value()) < abs(degrees * 10)){
+        while(fabs(gyro.get_value()) < abs(degrees * 10)) {
+        setDrive(0.5*-voltage*direction, 0.5*voltage*direction);
+        delay(10);
+        }
+    }
+    //reset drive to 0
+    setDrive(0,0);
+}

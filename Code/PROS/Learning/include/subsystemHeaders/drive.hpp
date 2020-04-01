@@ -12,3 +12,5 @@ void setDriveMotors();
 
 //AUTONOMOUS FUNCTIONS
 void translate(int distance, int voltage);
+
+void rotate(int degrees, int voltage);
